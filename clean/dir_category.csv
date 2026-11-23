@@ -1,0 +1,14 @@
+order_category,category_short,revenue_type,lines,orders_with_category,net_revenue,share_of_net,avg_line_revenue,zero_lines,h2_vs_h1
+Professional Services Revenue,Professional Services,Revenue,3408,3408,333168.35,0.2286,97.76,745,-0.0004
+Laboratory Revenue,Laboratory,Revenue,2333,2333,291012.65,0.1997,124.74,464,0.0029
+Pharmacy Revenue,Pharmacy,Revenue,2468,2468,249879.43,0.1714,101.25,385,0.0341
+Grooming Revenue,Grooming,Revenue,1879,1879,208602.16,0.1431,111.02,2,-0.0576
+Boarding Revenue,Boarding,Revenue,678,678,162876.6,0.1117,240.23,6,0.2257
+Dentistry Revenue,Dentistry,Revenue,120,120,73013.3,0.0501,608.44,2,0.0717
+Ancillary Products & Services Revenue,Ancillary Products & Services,Revenue,962,962,32946.4,0.0226,34.25,356,0.2852
+Anesthesia Revenue,Anesthesia,Revenue,471,471,32571.31,0.0223,69.15,137,-0.0758
+Imaging Revenue,Imaging,Revenue,229,229,31516.83,0.0216,137.63,65,0.2088
+Surgery Revenue,Surgery,Revenue,130,130,26453.34,0.0181,203.49,2,-0.4592
+Wellness/Pre-Paid Plan Revenue,Wellness/Pre-Paid Plan,Revenue,60,60,15513.0,0.0106,258.55,14,0.0858
+Dietary Product Revenue,Dietary Product,Revenue,314,314,15280.32,0.0105,48.66,20,0.0395
+Fee Discounts & Client Returns,Fee Discounts & Client Returns,Discount/Return,444,444,-15295.2,-0.0105,-34.45,169,-0.1312

@@ -1,0 +1,14 @@
+Table,Column,Expected,Actual,Example,Rows,Blanks,NonBlanks,Distinct,Min,Max,Top5,SpacePadded
+Orders,ORDER_ID,text,str,'197716-2603',13496,0,13496,5991,,,"'192369-2603' (9), '196978-2603' (9), '193056-2603' (9), '193262-2603' (9), '197434-2603' (8)",0
+Orders,ORDER_CATEGORY,text,str,'Grooming Revenue',13496,0,13496,13,,,"'Professional Services Revenue' (3408), 'Pharmacy Revenue' (2468), 'Laboratory Revenue' (2333), 'Grooming Revenue' (1879), 'Ancillary Products & Services Revenue' (962)",0
+Orders,REPORTING_DATE,date,str,'2023-12-06 00:00:00',13496,0,13496,269,2023-01-03 00:00:00,2023-12-06 00:00:00,"'2023-03-03 00:00:00' (103), '2023-05-08 00:00:00' (97), '2023-06-26 00:00:00' (97), '2023-03-06 00:00:00' (94), '2023-04-10 00:00:00' (92)",0
+Orders,REVENUE,decimal,int/float,74,13496,0,13496,1718,-894.0,2184.0,"0 (2367), 79 (556), 51.19 (414), 74 (290), 88 (251)",0
+Orders,ZIPCODE,5-digit text,int,50667,13496,0,13496,20,965,98042,"50154 (728), 55089 (716), 60084 (713), 50667 (712), 43082 (704)",0
+Regions,ZIPCODE,5-digit text,int,28904,20,0,20,20,965,98042,"28904 (1), 44321 (1), 41015 (1), 12151 (1), 43082 (1)",0
+Regions,REGION,text,str,'Mid-South (South)',20,1,19,7,,,"'Midwest' (6), 'South' (4), 'Mid-South (South)' (2), 'Northeast' (2), 'West' (2)",0
+Regions,STATE,text,str,'NC',20,0,20,18,,,"'OH' (2), 'IA' (2), 'NC' (1), 'KY' (1), 'NY' (1)",0
+Regions,AGENT_ID,integer,int,2,20,1,19,7,1,7,"3 (6), 6 (4), 2 (2), 5 (2), 7 (2)",0
+Sales_agents,AGENT_ID,integer,str,'1',7,0,7,7,,,"'1' (1), '2' (1), '3' (1), '4' (1), '5' (1)",0
+Sales_agents,SALES_TEAM,text,str,'Team 1',7,0,7,7,,,"'Team 1' (1), 'team 1' (1), 'Team 2' (1), 'team 2' (1), 'Team 3' (1)",0
+Sales_agents,SALES_AGENT,text,str,'Sam',7,0,7,7,,,"'Sam' (1), 'Peter' (1), 'Jan' (1), 'Sally' (1), 'Luke' (1)",0
+Sales_agents,REGION,text,str,'Mid-Atlantic (South)  ',7,0,7,7,,,"'Mid-Atlantic (South)  ' (1), 'Mid-South (South) ' (1), 'Midwest ' (1), 'North Midwest (Midwest)' (1), 'Northeast' (1)",4

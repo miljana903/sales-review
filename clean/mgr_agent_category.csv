@@ -1,0 +1,118 @@
+sales_agent,category_short,lines,net_revenue,agent_share,company_share
+All agents,Ancillary Products & Services,962,32946.4,0.0226,0.0226
+All agents,Anesthesia,471,32571.31,0.0223,0.0223
+All agents,Boarding,678,162876.6,0.1117,0.1117
+All agents,Dentistry,120,73013.3,0.0501,0.0501
+All agents,Dietary Product,314,15280.32,0.0105,0.0105
+All agents,Fee Discounts & Client Returns,444,-15295.2,-0.0105,-0.0105
+All agents,Grooming,1879,208602.16,0.1431,0.1431
+All agents,Imaging,229,31516.83,0.0216,0.0216
+All agents,Laboratory,2333,291012.65,0.1997,0.1997
+All agents,Pharmacy,2468,249879.43,0.1714,0.1714
+All agents,Professional Services,3408,333168.35,0.2286,0.2286
+All agents,Surgery,130,26453.34,0.0181,0.0181
+All agents,Wellness/Pre-Paid Plan,60,15513.0,0.0106,0.0106
+Gordon,Ancillary Products & Services,81,3192.59,0.0241,0.0226
+Gordon,Anesthesia,43,1960.99,0.0148,0.0223
+Gordon,Boarding,64,16598.7,0.1252,0.1117
+Gordon,Dentistry,12,4877.23,0.0368,0.0501
+Gordon,Dietary Product,32,1433.36,0.0108,0.0105
+Gordon,Fee Discounts & Client Returns,37,-1790.0,-0.0135,-0.0105
+Gordon,Grooming,208,22936.0,0.173,0.1431
+Gordon,Imaging,24,3037.0,0.0229,0.0216
+Gordon,Laboratory,215,25083.0,0.1892,0.1997
+Gordon,Pharmacy,219,23213.78,0.1751,0.1714
+Gordon,Professional Services,332,28852.55,0.2177,0.2286
+Gordon,Surgery,11,2136.46,0.0161,0.0181
+Gordon,Wellness/Pre-Paid Plan,3,1030.0,0.0078,0.0106
+Jan,Ancillary Products & Services,306,9704.7,0.0218,0.0226
+Jan,Anesthesia,152,10679.82,0.024,0.0223
+Jan,Boarding,207,47012.65,0.1057,0.1117
+Jan,Dentistry,38,23288.95,0.0524,0.0501
+Jan,Dietary Product,88,3905.14,0.0088,0.0105
+Jan,Fee Discounts & Client Returns,142,-5622.6,-0.0126,-0.0105
+Jan,Grooming,554,59557.9,0.1339,0.1431
+Jan,Imaging,72,10009.57,0.0225,0.0216
+Jan,Laboratory,719,89766.41,0.2019,0.1997
+Jan,Pharmacy,782,79839.09,0.1795,0.1714
+Jan,Professional Services,1040,101435.52,0.2281,0.2286
+Jan,Surgery,38,9046.27,0.0203,0.0181
+Jan,Wellness/Pre-Paid Plan,28,6079.0,0.0137,0.0106
+Luke,Ancillary Products & Services,90,3192.18,0.0218,0.0226
+Luke,Anesthesia,50,3770.35,0.0257,0.0223
+Luke,Boarding,72,16785.45,0.1144,0.1117
+Luke,Dentistry,12,8104.52,0.0552,0.0501
+Luke,Dietary Product,35,1920.02,0.0131,0.0105
+Luke,Fee Discounts & Client Returns,40,-1025.0,-0.007,-0.0105
+Luke,Grooming,165,18898.0,0.1288,0.1431
+Luke,Imaging,21,2653.0,0.0181,0.0216
+Luke,Laboratory,239,30507.65,0.2079,0.1997
+Luke,Pharmacy,261,23634.58,0.161,0.1714
+Luke,Professional Services,339,33458.06,0.228,0.2286
+Luke,Surgery,13,3576.36,0.0244,0.0181
+Luke,Wellness/Pre-Paid Plan,4,1290.0,0.0088,0.0106
+Peter,Ancillary Products & Services,87,3720.23,0.0291,0.0226
+Peter,Anesthesia,44,2934.06,0.023,0.0223
+Peter,Boarding,63,11043.25,0.0864,0.1117
+Peter,Dentistry,9,5430.67,0.0425,0.0501
+Peter,Dietary Product,40,2261.95,0.0177,0.0105
+Peter,Fee Discounts & Client Returns,43,-1109.8,-0.0087,-0.0105
+Peter,Grooming,203,21504.0,0.1683,0.1431
+Peter,Imaging,19,2747.8,0.0215,0.0216
+Peter,Laboratory,231,24246.13,0.1897,0.1997
+Peter,Pharmacy,225,22335.74,0.1748,0.1714
+Peter,Professional Services,321,30325.76,0.2373,0.2286
+Peter,Surgery,11,1347.43,0.0105,0.0181
+Peter,Wellness/Pre-Paid Plan,5,1007.0,0.0079,0.0106
+Sally,Ancillary Products & Services,57,2324.07,0.0292,0.0226
+Sally,Anesthesia,23,2202.61,0.0276,0.0223
+Sally,Boarding,21,6491.0,0.0815,0.1117
+Sally,Dentistry,7,4167.4,0.0523,0.0501
+Sally,Dietary Product,18,682.94,0.0086,0.0105
+Sally,Fee Discounts & Client Returns,29,-864.3,-0.0108,-0.0105
+Sally,Grooming,104,12560.9,0.1576,0.1431
+Sally,Imaging,14,2307.0,0.0289,0.0216
+Sally,Laboratory,119,15683.54,0.1968,0.1997
+Sally,Pharmacy,132,13112.49,0.1645,0.1714
+Sally,Professional Services,181,18482.17,0.2319,0.2286
+Sally,Surgery,10,2202.19,0.0276,0.0181
+Sally,Wellness/Pre-Paid Plan,1,339.0,0.0043,0.0106
+Sam,Ancillary Products & Services,106,3580.96,0.0233,0.0226
+Sam,Anesthesia,52,3543.03,0.0231,0.0223
+Sam,Boarding,76,19408.7,0.1264,0.1117
+Sam,Dentistry,8,4998.65,0.0325,0.0501
+Sam,Dietary Product,33,1684.23,0.011,0.0105
+Sam,Fee Discounts & Client Returns,37,-1500.9,-0.0098,-0.0105
+Sam,Grooming,199,23611.0,0.1537,0.1431
+Sam,Imaging,21,3334.2,0.0217,0.0216
+Sam,Laboratory,229,30295.03,0.1972,0.1997
+Sam,Pharmacy,247,23003.38,0.1498,0.1714
+Sam,Professional Services,343,37113.97,0.2416,0.2286
+Sam,Surgery,14,2481.37,0.0162,0.0181
+Sam,Wellness/Pre-Paid Plan,6,2046.0,0.0133,0.0106
+Sarah,Ancillary Products & Services,180,5667.47,0.0192,0.0226
+Sarah,Anesthesia,85,5652.4,0.0191,0.0223
+Sarah,Boarding,141,35605.5,0.1204,0.1117
+Sarah,Dentistry,28,16784.44,0.0567,0.0501
+Sarah,Dietary Product,57,2949.97,0.01,0.0105
+Sarah,Fee Discounts & Client Returns,97,-2702.6,-0.0091,-0.0105
+Sarah,Grooming,362,40291.36,0.1362,0.1431
+Sarah,Imaging,50,6778.26,0.0229,0.0216
+Sarah,Laboratory,471,59544.84,0.2013,0.1997
+Sarah,Pharmacy,479,52371.14,0.177,0.1714
+Sarah,Professional Services,685,64903.61,0.2194,0.2286
+Sarah,Surgery,27,4906.87,0.0166,0.0181
+Sarah,Wellness/Pre-Paid Plan,11,3063.0,0.0104,0.0106
+Unassigned (PR),Ancillary Products & Services,55,1564.2,0.0204,0.0226
+Unassigned (PR),Anesthesia,22,1828.05,0.0239,0.0223
+Unassigned (PR),Boarding,34,9931.35,0.1296,0.1117
+Unassigned (PR),Dentistry,6,5361.44,0.07,0.0501
+Unassigned (PR),Dietary Product,11,442.71,0.0058,0.0105
+Unassigned (PR),Fee Discounts & Client Returns,19,-680.0,-0.0089,-0.0105
+Unassigned (PR),Grooming,84,9243.0,0.1207,0.1431
+Unassigned (PR),Imaging,8,650.0,0.0085,0.0216
+Unassigned (PR),Laboratory,110,15886.05,0.2074,0.1997
+Unassigned (PR),Pharmacy,123,12369.23,0.1615,0.1714
+Unassigned (PR),Professional Services,167,18596.71,0.2428,0.2286
+Unassigned (PR),Surgery,6,756.39,0.0099,0.0181
+Unassigned (PR),Wellness/Pre-Paid Plan,2,659.0,0.0086,0.0106

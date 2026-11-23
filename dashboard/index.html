@@ -1,0 +1,564 @@
+<meta name="dash-one-writer">
+<style>
+  .sr { --gap: var(--cds-gap-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+  .sr h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .sr h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; text-wrap: balance; }
+  .sr h3 { font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); margin: 0; text-wrap: balance; }
+  .sr p { margin: 0; max-width: 72ch; line-height: 1.5; }
+  .sr .muted { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .sr .head { display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+  .sr .tabs { display: flex; gap: var(--cds-gap-xs); flex-wrap: wrap; border-bottom: 1px solid var(--color-border-line); }
+  .sr .tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; padding: var(--cds-pad-sm) var(--cds-pad-md); font: inherit; color: var(--color-fg-muted); cursor: pointer; margin-bottom: -1px; }
+  .sr .tab[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .sr .tab:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+  .sr section.view { display: flex; flex-direction: column; gap: var(--cds-gap-xl); }
+  .sr .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--cds-gap-md); }
+  .sr .tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md) var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-xs); min-width: 0; }
+  .sr .tile .lab { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); letter-spacing: .02em; }
+  .sr .tile .val { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 1.7rem; font-variant-numeric: tabular-nums; line-height: 1.15; }
+  .sr .tile .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+  .sr .good { color: var(--color-ok); } .sr .bad { color: var(--color-bad); } .sr .warn { color: var(--color-warn); }
+  .sr .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: var(--cds-gap-xl); }
+  .sr .card { display: flex; flex-direction: column; gap: var(--cds-gap-sm); min-width: 0; }
+  .sr .chart { position: relative; min-height: 240px; width: 100%; }
+  .sr .chart.tall { min-height: 320px; }
+  .sr .chart svg { display: block; overflow: visible; }
+  .sr .chart text { fill: var(--cds-text-secondary); font-size: 11px; font-family: var(--font-anthropic-sans); }
+  .sr .chart .lbl { fill: var(--color-fg); }
+  .sr .chart .axis text { fill: var(--cds-text-secondary); font-size: 11px; }
+  .sr .chart .axis path, .sr .chart .axis line { stroke: var(--cds-chart-axis); }
+  .sr .chart .grid line { stroke: var(--cds-chart-grid); }
+  .sr .tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: 6px 8px; font-size: var(--cds-font-size-caption); color: var(--color-fg); white-space: nowrap; z-index: 5; }
+  .sr .tablewrap { overflow-x: auto; }
+  .sr table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-caption); }
+  .sr th, .sr td { padding: 6px 8px; border-bottom: 1px solid var(--color-border-line); text-align: right; white-space: nowrap; }
+  .sr th:first-child, .sr td:first-child, .sr th.l, .sr td.l { text-align: left; }
+  .sr th { color: var(--color-fg-muted); font-weight: var(--cds-font-weight-medium); }
+  .sr tr.sel td { background: var(--color-panel); font-weight: var(--cds-font-weight-medium); }
+  .sr .controls { display: flex; gap: var(--cds-gap-md); align-items: center; flex-wrap: wrap; }
+  .sr .note { border-left: 3px solid var(--color-warn); padding: var(--cds-pad-xs) var(--cds-pad-md); }
+  .sr details summary { cursor: pointer; font-weight: var(--cds-font-weight-medium); }
+  .sr details ul { margin: var(--cds-gap-sm) 0 0; padding-left: 1.2em; line-height: 1.55; max-width: 80ch; }
+  @media print { .sr section.view[hidden] { display: flex !important; } .sr #mgr { break-before: page; } .sr .tabs { display: none; } }
+</style>
+
+<div class="sr" data-read lang="en">
+  <header class="head" id="top">
+    <h1>Sales review 2023</h1>
+    <p class="muted">Veterinary clinic sales, 3 Jan to 6 Dec 2023 · 5,991 orders over 20 ZIP territories and 7 sales agents · net revenue includes discounts and client returns</p>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Dashboard view">
+    <button class="tab" role="tab" id="tab-dir" aria-selected="true" aria-controls="dir" data-tab="dir">Sales director</button>
+    <button class="tab" role="tab" id="tab-mgr" aria-selected="false" aria-controls="mgr" data-tab="mgr">Sales manager</button>
+  </nav>
+
+  <!-- ===================== DIRECTOR ===================== -->
+  <section class="view" id="dir" role="tabpanel" aria-labelledby="tab-dir">
+    <p id="dir-takeaway">Net revenue was <b data-source="kpis" data-field="net_revenue" data-row="0" data-draw="k-net">—</b> across <b data-source="kpis" data-field="orders" data-row="0" data-draw="k-orders2">—</b> orders. Full months averaged <b data-source="kpis" data-field="h2_avg_month" data-row="0" data-draw="k-h2">—</b> in Jul–Nov against <b data-source="kpis" data-field="h1_avg_month" data-row="0" data-draw="k-h1">—</b> in Jan–Jun, a change of <b data-source="kpis" data-field="h2_vs_h1" data-row="0" data-draw="k-h2h1">—</b>. Revenue differences between agents come mostly from how many ZIPs they cover, and <b data-source="kpis" data-field="unassigned_share" data-row="0" data-draw="k-unshare">—</b> of revenue sits in a ZIP with no agent.</p>
+
+    <div class="tiles" id="dir-tiles">
+      <div class="tile" id="t-net"><span class="lab">Net revenue · Jan 3–Dec 6</span><span class="val" data-source="kpis" data-field="net_revenue" data-row="0" data-draw="k-net">—</span><span class="sub">Gross <span data-source="kpis" data-field="gross_revenue" data-row="0" data-draw="k-gross">—</span></span></div>
+      <div class="tile" id="t-month"><span class="lab">Avg full month · Jan–Nov</span><span class="val" data-source="kpis" data-field="avg_full_month_revenue" data-row="0" data-draw="k-avgm">—</span><span class="sub">Jul–Nov vs Jan–Jun <span data-source="kpis" data-field="h2_vs_h1" data-row="0" data-draw="k-h2h1c">—</span></span></div>
+      <div class="tile" id="t-orders"><span class="lab">Orders</span><span class="val" data-source="kpis" data-field="orders" data-row="0" data-draw="k-orders">—</span><span class="sub">about 300 per ZIP</span></div>
+      <div class="tile" id="t-aov"><span class="lab">Average order value</span><span class="val" data-source="kpis" data-field="aov" data-row="0" data-draw="k-aov">—</span><span class="sub">net revenue ÷ orders</span></div>
+      <div class="tile" id="t-disc"><span class="lab">Discounts &amp; returns</span><span class="val" data-source="kpis" data-field="discount_rate" data-row="0" data-draw="k-disc">—</span><span class="sub"><span data-source="kpis" data-field="discounts" data-row="0" data-draw="k-discv">—</span> of gross</span></div>
+      <div class="tile" id="t-unassigned"><span class="lab">Revenue with no agent (PR)</span><span class="val warn" data-source="kpis" data-field="unassigned_revenue" data-row="0" data-draw="k-unrev">—</span><span class="sub">ZIP 00965, <span data-source="kpis" data-field="unassigned_share" data-row="0" data-draw="k-unshare2">—</span> of total</span></div>
+    </div>
+
+    <div class="card" id="dir-trend-card">
+      <h2>Monthly net revenue moves between $113K and $147K with no clear trend</h2>
+      <p class="muted">Net revenue by month, Jan–Nov 2023. December (1–6 Dec, 4 trading days, $22,508 so far) is left out because it is not a full month. Dashed line: Jan–Nov monthly average.</p>
+      <div class="chart" id="dir-trend" data-source="monthly kpis" data-draw="dir-trend"></div>
+    </div>
+
+    <div class="grid2">
+      <div class="card" id="dir-region-card">
+        <h2>Region totals follow ZIP count; revenue per ZIP is close everywhere</h2>
+        <p class="muted">Net revenue by region, with revenue per ZIP territory beside each bar. Each ZIP carries about 300 orders.</p>
+        <div class="chart tall" id="dir-region" data-source="regions" data-draw="dir-region"></div>
+      </div>
+      <div class="card" id="dir-growth-card">
+        <h2>Northeast falls 8% while South grows 8%</h2>
+        <p class="muted">Average monthly net revenue, Jul–Nov compared with Jan–Jun, by region.</p>
+        <div class="chart tall" id="dir-growth" data-source="regions" data-draw="dir-growth"></div>
+      </div>
+    </div>
+
+    <div class="card" id="dir-cat-card">
+      <h2>Three categories bring 60% of revenue; Boarding adds the most growth</h2>
+      <p class="muted">Share of net revenue by category, and the change in monthly average Jul–Nov vs Jan–Jun. Small categories (under 250 lines) swing widely and are marked.</p>
+      <div class="chart tall" id="dir-cat" data-source="categories" data-draw="dir-cat"></div>
+    </div>
+
+    <div class="card" id="dir-region-table-card">
+      <h2>Region scorecard</h2>
+      <div class="tablewrap">
+        <table id="dir-region-table" data-source="regions" data-row-key="region">
+          <thead><tr>
+            <th class="l" data-field="region">Region</th><th class="l" data-field="macro_region">Macro region</th><th data-field="zips">ZIPs</th><th data-field="orders">Orders</th>
+            <th data-field="net_revenue">Net revenue</th><th data-field="revenue_share">Share</th><th data-field="revenue_per_zip">Per ZIP</th><th data-field="aov">AOV</th><th data-field="discount_rate">Discount rate</th><th data-field="h2_vs_h1">Jul–Nov vs Jan–Jun</th>
+          </tr></thead>
+          <tbody data-draw="dir-region-rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="note" id="dir-actions"><b>For decision:</b> assign an owner to the Puerto Rico ZIP (00965), which brings as much revenue as an average ZIP but has no agent; review the Northeast decline; treat territory count, not totals, as the basis for comparing agents.</p>
+  </section>
+
+  <!-- ===================== MANAGER ===================== -->
+  <section class="view" id="mgr" role="tabpanel" aria-labelledby="tab-mgr" hidden>
+    <div class="controls" id="mgr-controls">
+      <label for="agent-pick"><b>Agent</b></label>
+      <select class="dash-select" id="agent-pick" aria-label="Agent" data-source="agents" data-draw="agent-pick"></select>
+      <span class="muted">Picks the agent for the tiles, trend, weekly, mix and ZIP views.</span>
+    </div>
+
+    <p id="mgr-takeaway" data-draw="mgr-takeaway">—</p>
+
+    <div class="tiles" id="mgr-tiles" data-draw="mgr-tiles"></div>
+
+    <div class="card" id="mgr-perzip-card">
+      <h2>Peter and Gordon trail on revenue per ZIP because their orders are smaller</h2>
+      <p class="muted">Net revenue per ZIP territory by agent, Jan 3–Dec 6. Line: company average per ZIP. Order counts are equal per ZIP (about 300), so the gap is average order value.</p>
+      <div class="chart" id="mgr-perzip" data-source="agents kpis" data-draw="mgr-perzip"></div>
+    </div>
+
+    <div class="card" id="mgr-agent-table-card">
+      <h2>Agent scorecard</h2>
+      <p class="muted">Nov vs Aug–Oct compares November with the average of the three months before. Refund lines are negative lines outside the discount category.</p>
+      <div class="tablewrap">
+        <table id="mgr-agent-table" data-source="agents" data-row-key="sales_agent">
+          <thead><tr>
+            <th class="l" data-field="sales_agent">Agent</th><th class="l" data-field="sales_team">Team</th><th class="l" data-field="region">Region</th><th data-field="zips">ZIPs</th><th data-field="orders">Orders</th>
+            <th data-field="net_revenue">Net revenue</th><th data-field="revenue_per_zip">Per ZIP</th><th data-field="aov">AOV</th><th data-field="lines_per_order">Lines/order</th><th data-field="discount_rate">Discount rate</th><th data-field="refund_lines">Refund lines</th><th data-field="nov_vs_aug_oct">Nov vs Aug–Oct</th>
+          </tr></thead>
+          <tbody data-draw="mgr-agent-rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card" id="mgr-trend-card">
+        <h2>Monthly revenue per ZIP against the company</h2>
+        <p class="muted">Selected agent (solid) and all agents (muted), Jan–Nov. December is partial and left out.</p>
+        <div class="chart" id="mgr-trend" data-source="agent_month" data-draw="mgr-trend"></div>
+      </div>
+      <div class="card" id="mgr-week-card">
+        <h2>Last 12 weeks, revenue per ZIP</h2>
+        <p class="muted">Weeks start Monday; the week of 4 Dec has 3 days. One ZIP has about 6 orders a week, so single weeks swing.</p>
+        <div class="chart" id="mgr-week" data-source="agent_week" data-draw="mgr-week"></div>
+      </div>
+    </div>
+
+    <div class="card" id="mgr-mix-card">
+      <h2>Category mix against the company</h2>
+      <p class="muted">Share of the selected agent's net revenue by category (bar) and the company share (tick).</p>
+      <div class="chart tall" id="mgr-mix" data-source="agent_category" data-draw="mgr-mix"></div>
+    </div>
+
+    <div class="card" id="mgr-zip-card">
+      <h2>ZIP territories</h2>
+      <div class="tablewrap">
+        <table id="mgr-zip-table" data-source="zips" data-row-key="zip5">
+          <thead><tr>
+            <th class="l" data-field="zip5">ZIP</th><th class="l" data-field="state">State</th><th class="l" data-field="sales_agent">Agent</th><th data-field="orders">Orders</th><th data-field="net_revenue">Net revenue</th><th data-field="aov">AOV</th><th data-field="discount_rate">Discount rate</th><th data-field="h2_vs_h1">Jul–Nov vs Jan–Jun</th>
+          </tr></thead>
+          <tbody data-draw="mgr-zip-rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <details id="defs">
+    <summary>Definitions, data quality and assumptions</summary>
+    <ul>
+      <li><b>Net revenue</b> is the sum of every order line, including the "Fee Discounts &amp; Client Returns" category. <b>Gross revenue</b> leaves that category out. The two differ by about 1%.</li>
+      <li><b>Orders</b> count distinct order IDs. An order has 1 to 9 category lines, one date and one ZIP. <b>AOV</b> is net revenue divided by orders.</li>
+      <li><b>Revenue per ZIP</b> divides net revenue by the ZIP territories an agent or region covers. Every ZIP has 299 or 300 orders in the data, so it is the fair way to compare agents with 1 to 6 ZIPs.</li>
+      <li><b>Jul–Nov vs Jan–Jun</b> compares average monthly revenue, because the two periods have 5 and 6 full months. December (1–6 Dec, 4 trading days) is partial and is left out of every comparison.</li>
+      <li>ZIP 00965 (Puerto Rico) has no region or agent in the reference table. Its 647 lines ($76,608) are kept and shown as "Unassigned (PR)".</li>
+      <li>Cleaning fixed team name case ("team 1" to "Team 1"), trailing spaces in agent regions, the agent ID type and lost leading zeros in ZIP codes. No rows were removed and every total reconciles to the source to the cent.</li>
+      <li>2,367 lines (17.5%) have revenue 0 and 121 lines outside the discount category are negative (refunds, $−12,936.73 in total). Both are kept as recorded.</li>
+      <li>Patterns here describe the data; they do not show what causes them. There are no targets or quotas in the data, so the page compares against company averages and earlier months.</li>
+    </ul>
+  </details>
+</div>
+
+<script>
+// ---------- shared helpers (on window: each script has its own scope) ----------
+window.SR = (() => {
+  const n = (v) => (v === null || v === undefined || v === '' ? NaN : +v);
+  const money0 = d3.format('$,.0f');
+  const money2 = d3.format('$,.2f');
+  const kfmt = (v) => (Math.abs(v) >= 1e6 ? d3.format('$.3s')(v).replace('G', 'B') : Math.abs(v) >= 1e3 ? '$' + d3.format(',.1f')(v / 1e3) + 'K' : money0(v));
+  const pct1 = d3.format('.1%');
+  const spct = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + d3.format('.1%')(Math.abs(v));
+  const state = { agent: 'All agents' };
+  const ok = (id) => dash.data(id).status === 'ok';
+  const dash0 = (el) => { el.textContent = '—'; };
+  function tip(el) {
+    let t = el.querySelector(':scope > .tip');
+    if (!t) { t = document.createElement('div'); t.className = 'tip'; t.hidden = true; el.appendChild(t); }
+    return {
+      show(ev, lines) {
+        t.replaceChildren(...lines.map((l, i) => { const d = document.createElement('div'); d.textContent = l; if (i === 0) d.style.fontWeight = '600'; return d; }));
+        t.hidden = false;
+        const r = el.getBoundingClientRect();
+        let x = ev.clientX - r.left + 12, y = ev.clientY - r.top + 12;
+        const w = t.offsetWidth; if (x + w > r.width) x = Math.max(0, ev.clientX - r.left - w - 12);
+        t.style.left = x + 'px'; t.style.top = y + 'px';
+      },
+      hide() { t.hidden = true; },
+    };
+  }
+  function failed(el, id) {
+    const s = dash.data(id).status;
+    if (s === 'error') { el.replaceChildren(); const p = document.createElement('p'); p.className = 'muted'; p.textContent = 'This chart could not load its data.'; el.appendChild(p); return true; }
+    if (s !== 'ok') { el.replaceChildren(); el.textContent = '—'; return true; }
+    return false;
+  }
+  // horizontal bar chart: rows [{label, value, text, color, tipLines}]
+  function hbar(el, rows, opt = {}) {
+    el.replaceChildren();
+    const W = el.clientWidth || 600, bh = opt.barH || 22, gap = 8;
+    const H = rows.length * (bh + gap) + 28;
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('height', H).attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('role', 'img').attr('aria-label', opt.aria || 'Bar chart');
+    // measure labels
+    const meas = svg.append('g');
+    const lw = d3.max(rows, (r) => meas.append('text').text(r.label).node().getComputedTextLength()) || 60;
+    const tw = d3.max(rows, (r) => meas.append('text').text(r.text).node().getComputedTextLength()) || 40;
+    meas.remove();
+    const left = Math.min(lw + 10, W * 0.42), right = tw + 12;
+    const vals = rows.map((r) => r.value);
+    const lo = Math.min(0, d3.min(vals)), hi = Math.max(0, d3.max(vals));
+    const x = d3.scaleLinear().domain([lo, hi]).nice().range([left, W - right]);
+    const g = svg.append('g');
+    g.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - 22})`)
+      .call(d3.axisBottom(x).ticks(Math.max(2, Math.floor((W - left - right) / 90))).tickFormat(opt.tickFormat || kfmt));
+    g.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', 0).attr('y2', H - 22).style('stroke', 'var(--cds-chart-axis)');
+    if (opt.ref !== undefined) {
+      g.append('line').attr('x1', x(opt.ref)).attr('x2', x(opt.ref)).attr('y1', -4).attr('y2', H - 22)
+        .style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 3');
+    }
+    const T = tip(el);
+    const row = g.selectAll('g.r').data(rows).join('g').attr('class', 'r').attr('transform', (d, i) => `translate(0,${i * (bh + gap)})`);
+    row.append('text').attr('class', 'lbl').attr('x', left - 8).attr('y', bh / 2).attr('dy', '0.35em').attr('text-anchor', 'end').text((d) => d.label)
+      .style('font-weight', (d) => (d.bold ? '600' : null));
+    row.append('rect').attr('x', (d) => x(Math.min(0, d.value))).attr('y', 0).attr('height', bh)
+      .attr('width', (d) => Math.max(1, Math.abs(x(d.value) - x(0)))).attr('rx', 2)
+      .style('fill', (d) => d.color || dash.colors[0]).style('opacity', (d) => d.fade ? 0.45 : 1);
+    if (opt.ticks) row.filter((d) => d.tick !== undefined).append('line').attr('x1', (d) => x(d.tick)).attr('x2', (d) => x(d.tick)).attr('y1', -3).attr('y2', bh + 3)
+      .style('stroke', 'var(--color-fg)').style('stroke-width', 2);
+    row.append('text').attr('class', 'lbl').attr('x', (d) => Math.max(x(d.value), x(0), d.tick !== undefined ? x(d.tick) : 0) + 6).attr('y', bh / 2).attr('dy', '0.35em').text((d) => d.text);
+    row.append('rect').attr('x', 0).attr('y', -gap / 2).attr('width', W).attr('height', bh + gap).style('fill', 'transparent')
+      .on('pointermove', (ev, d) => T.show(ev, d.tipLines)).on('pointerleave', () => T.hide());
+  }
+  // line chart: series [{name, color, points:[{x:Date, y, label}], dashed, faded}]
+  function line(el, series, opt = {}) {
+    el.replaceChildren();
+    const W = el.clientWidth || 600, H = opt.height || 240, m = { t: 14, r: 16, b: 26, l: 10 };
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('height', H).attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('role', 'img').attr('aria-label', opt.aria || 'Line chart');
+    const all = series.flatMap((s) => s.points).concat(opt.bars ? opt.bars.points : []);
+    const ymax = d3.max(all, (p) => p.y) * 1.08, ymin = opt.zero ? 0 : d3.min(all, (p) => p.y) * 0.9;
+    const y = d3.scaleLinear().domain([ymin, ymax]).nice().range([H - m.b, m.t]);
+    const meas = svg.append('text').text(kfmt(y.domain()[1])); m.l = meas.node().getComputedTextLength() + 10; meas.remove();
+    const x = (opt.band ? d3.scaleBand().domain(opt.band).range([m.l, W - m.r]).padding(0.25) : d3.scaleUtc().domain(d3.extent(all, (p) => p.x)).range([m.l + 6, W - m.r]));
+    const xp = (v) => (opt.band ? x(v) + x.bandwidth() / 2 : x(v));
+    svg.append('g').attr('class', 'grid').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(W - m.l - m.r)).tickFormat('')).call((g) => g.select('.domain').remove());
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickFormat(kfmt)).call((g) => g.select('.domain').remove());
+    const nT = Math.max(2, Math.floor((W - m.l) / 70));
+    const xa = opt.band ? d3.axisBottom(x).tickFormat(opt.bandFormat).tickValues(opt.band.filter((d, i) => i % Math.ceil(opt.band.length / nT) === 0)) : d3.axisBottom(x).ticks(nT).tickFormat(opt.xFormat || d3.utcFormat('%b'));
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(xa);
+    if (opt.ref !== undefined) svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(opt.ref)).attr('y2', y(opt.ref)).style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 3');
+    if (opt.bars) {
+      const bs = opt.bars;
+      svg.append('g').selectAll('rect').data(bs.points).join('rect').attr('x', (p) => x(p.x)).attr('width', x.bandwidth()).attr('y', (p) => y(Math.max(0, p.y))).attr('height', (p) => Math.abs(y(p.y) - y(0))).attr('rx', 2).style('fill', bs.color);
+    }
+    const T = tip(el);
+    series.forEach((s) => {
+      const pts = s.points.filter((p) => !p.loose);
+      svg.append('path').datum(pts).attr('d', d3.line().x((p) => xp(p.x)).y((p) => y(p.y)))
+        .style('fill', 'none').style('stroke', s.color).style('stroke-width', s.faded ? 1.5 : 2.25).style('stroke-dasharray', s.dashed ? '5 4' : null);
+      svg.append('g').selectAll('circle').data(s.points).join('circle').attr('cx', (p) => xp(p.x)).attr('cy', (p) => y(p.y))
+        .attr('r', (p, i) => (p.loose ? 4.5 : i === pts.length - 1 && !s.faded ? 4 : 2.5))
+        .style('fill', (p) => (p.loose ? 'var(--color-bg)' : s.color)).style('stroke', s.color).style('stroke-width', 1.5);
+    });
+    if (opt.endLabels) opt.endLabels.forEach((t) => svg.append('text').attr('class', 'lbl').attr('x', t.x).attr('y', y(t.y) - 8).attr('text-anchor', t.anchor || 'middle').text(t.text));
+    // hover: nearest x
+    const xs = Array.from(new Set(all.map((p) => +p.x || p.x)));
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).style('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [mx] = d3.pointer(ev);
+        let best = null, bd = Infinity;
+        all.forEach((p) => { const d = Math.abs(xp(p.x) - mx); if (d < bd) { bd = d; best = p; } });
+        if (!best) return;
+        const k = +best.x || best.x;
+        const lines = [best.xLabel];
+        series.forEach((s) => s.points.filter((p) => (+p.x || p.x) === k).forEach((p) => lines.push(`${s.name}: ${p.label}`)));
+        if (opt.bars) opt.bars.points.filter((p) => p.x === k).forEach((p) => lines.push(`${opt.bars.name}: ${p.label}`));
+        T.show(ev, lines);
+      }).on('pointerleave', () => T.hide());
+  }
+  return { n, money0, money2, kfmt, pct1, spct, state, ok, dash0, hbar, line, failed, tip };
+})();
+</script>
+
+<script>
+// ---------- tabs ----------
+(() => {
+  const tabs = document.querySelectorAll('.sr .tab');
+  const open = (id) => {
+    tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === id)));
+    document.querySelectorAll('.sr section.view').forEach((s) => { s.hidden = s.id !== id; });
+  };
+  tabs.forEach((t) => t.addEventListener('click', () => { open(t.dataset.tab); dash.setLink(t.dataset.tab); }));
+  if (location.hash === '#mgr') open('mgr');
+  window.addEventListener('beforeprint', () => document.querySelectorAll('.sr section.view').forEach((s) => { s.hidden = false; }));
+  window.addEventListener('afterprint', () => open(document.querySelector('.sr .tab[aria-selected="true"]')?.dataset.tab || 'dir'));
+})();
+</script>
+
+<script>
+// ---------- director: KPI figures ----------
+(() => {
+  const { n, money0, money2, pct1, spct } = SR;
+  const fig = (name, field, fmt, cls) => dash.draw(name, (el) => {
+    const d = dash.data('kpis');
+    if (d.status !== 'ok' || !d.data.length) { el.textContent = '—'; return; }
+    const v = n(d.data[0][field]);
+    el.textContent = fmt(v);
+    if (cls) { el.classList.remove('good', 'bad'); const c = cls(v); if (c) el.classList.add(c); }
+  });
+  fig('k-net', 'net_revenue', money0);
+  fig('k-gross', 'gross_revenue', money0);
+  fig('k-orders', 'orders', d3.format(','));
+  fig('k-orders2', 'orders', d3.format(','));
+  fig('k-aov', 'aov', money2);
+  fig('k-avgm', 'avg_full_month_revenue', money0);
+  fig('k-h1', 'h1_avg_month', money0);
+  fig('k-h2', 'h2_avg_month', money0);
+  fig('k-h2h1', 'h2_vs_h1', spct);
+  fig('k-h2h1c', 'h2_vs_h1', spct, (v) => (v > 0 ? 'good' : v < 0 ? 'bad' : null));
+  fig('k-disc', 'discount_rate', pct1);
+  fig('k-discv', 'discounts', money0);
+  fig('k-unrev', 'unassigned_revenue', money0);
+  fig('k-unshare', 'unassigned_share', pct1);
+  fig('k-unshare2', 'unassigned_share', pct1);
+})();
+</script>
+
+<script>
+// ---------- director: charts and table ----------
+(() => {
+  const { n, money0, money2, kfmt, pct1, spct, hbar, line, failed } = SR;
+  const mfmt = d3.utcFormat('%b %Y');
+
+  dash.draw('dir-trend', (el) => {
+    if (failed(el, 'monthly') || failed(el, 'kpis')) return;
+    const rows = dash.data('monthly').data;
+    const k = dash.data('kpis').data[0];
+    const pts = rows.filter((r) => r.is_partial_month !== '1').map((r) => ({
+      x: d3.utcParse('%Y-%m')(r.month), y: n(r.net_revenue), xLabel: mfmt(d3.utcParse('%Y-%m')(r.month)),
+      label: `${money0(n(r.net_revenue))} · ${d3.format(',')(n(r.orders))} orders · AOV ${money2(n(r.aov))}`,
+    }));
+    const W = el.clientWidth || 600;
+    line(el, [{ name: 'Net revenue', color: dash.colors[0], points: pts }], {
+      aria: 'Line chart of monthly net revenue from January to November 2023, between about 113 and 147 thousand dollars',
+      ref: n(k.avg_full_month_revenue), height: 260,
+      endLabels: [{ x: Math.min(W * 0.34, 260), y: n(k.avg_full_month_revenue), text: 'Jan–Nov avg ' + kfmt(n(k.avg_full_month_revenue)), anchor: 'middle' }],
+    });
+  });
+
+  const regionColor = (r) => (r.region === 'Unassigned (PR)' ? 'var(--color-warn)' : dash.colors[0]);
+  dash.draw('dir-region', (el) => {
+    if (failed(el, 'regions')) return;
+    const rows = dash.data('regions').data.slice().sort((a, b) => n(b.net_revenue) - n(a.net_revenue));
+    hbar(el, rows.map((r) => ({ label: r.region, value: n(r.net_revenue), color: regionColor(r),
+      text: `${kfmt(n(r.net_revenue))} · ${kfmt(n(r.revenue_per_zip))}/ZIP`,
+      tipLines: [r.region, `Net revenue ${money0(n(r.net_revenue))} (${pct1(n(r.revenue_share))})`, `${r.zips} ZIPs · ${d3.format(',')(n(r.orders))} orders`, `Per ZIP ${money0(n(r.revenue_per_zip))} · AOV ${money2(n(r.aov))}`] })),
+      { aria: 'Bar chart of net revenue by region, Midwest largest at about 445 thousand dollars' });
+  });
+
+  dash.draw('dir-growth', (el) => {
+    if (failed(el, 'regions')) return;
+    const rows = dash.data('regions').data.slice().sort((a, b) => n(b.h2_vs_h1) - n(a.h2_vs_h1));
+    hbar(el, rows.map((r) => ({ label: r.region, value: n(r.h2_vs_h1),
+      color: n(r.h2_vs_h1) >= 0 ? 'var(--color-ok)' : 'var(--color-bad)', text: spct(n(r.h2_vs_h1)),
+      tipLines: [r.region, `Jan–Jun ${money0(n(r.h1_avg_month))}/month`, `Jul–Nov ${money0(n(r.h2_avg_month))}/month`, `Change ${spct(n(r.h2_vs_h1))}`] })),
+      { tickFormat: d3.format('+.0%'), aria: 'Bar chart of change in monthly revenue by region, Jul–Nov vs Jan–Jun; Northeast falls 8%' });
+  });
+
+  dash.draw('dir-cat', (el) => {
+    if (failed(el, 'categories')) return;
+    const rows = dash.data('categories').data.slice().sort((a, b) => n(b.share_of_net) - n(a.share_of_net));
+    hbar(el, rows.map((r) => {
+      const small = n(r.lines) < 250;
+      return { label: r.category_short, value: n(r.share_of_net), color: n(r.net_revenue) < 0 ? 'var(--color-bad)' : dash.colors[0], fade: small,
+        text: `${pct1(n(r.share_of_net))} · ${spct(n(r.h2_vs_h1))}${small ? ' (small)' : ''}`,
+        tipLines: [r.order_category, `Net ${money0(n(r.net_revenue))} (${pct1(n(r.share_of_net))})`, `${d3.format(',')(n(r.lines))} lines · ${d3.format(',')(n(r.zero_lines))} at $0`, `Jul–Nov vs Jan–Jun ${spct(n(r.h2_vs_h1))}`] };
+    }), { tickFormat: d3.format('.0%'), barH: 18, aria: 'Bar chart of category share of net revenue; Professional Services, Laboratory and Pharmacy lead' });
+  });
+
+  dash.draw('dir-region-rows', (tb) => {
+    const d = dash.data('regions');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    d.data.forEach((r) => {
+      const tr = document.createElement('tr');
+      const cells = [r.region, r.macro_region, r.zips, d3.format(',')(n(r.orders)), money0(n(r.net_revenue)), pct1(n(r.revenue_share)), money0(n(r.revenue_per_zip)), money2(n(r.aov)), pct1(n(r.discount_rate)), spct(n(r.h2_vs_h1))];
+      cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c; if (i < 2) td.className = 'l'; if (i === 9) td.className = n(r.h2_vs_h1) < 0 ? 'bad' : 'good'; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+  });
+})();
+</script>
+
+<script>
+// ---------- manager ----------
+(() => {
+  const { n, money0, money2, kfmt, pct1, spct, hbar, line, failed, state } = SR;
+  const redrawAll = () => ['agent-pick', 'mgr-takeaway', 'mgr-tiles', 'mgr-perzip', 'mgr-agent-rows', 'mgr-trend', 'mgr-week', 'mgr-mix', 'mgr-zip-rows'].forEach((k) => dash.draw(k));
+  const pickAgent = (a) => { state.agent = a; redrawAll(); };
+
+  dash.draw('agent-pick', (sel) => {
+    const g = dash.data('agents');
+    const rows = g.status === 'ok' ? g.data.slice().sort((a, b) => a.sales_agent.localeCompare(b.sales_agent)) : [];
+    sel.replaceChildren(new Option('All agents', 'All agents'), ...rows.map((r) => new Option(r.sales_agent === 'Unassigned (PR)' ? 'Unassigned (PR, no agent)' : `${r.sales_agent} · ${r.sales_team} · ${r.region}`, r.sales_agent)));
+    sel.value = state.agent;
+    sel.onchange = () => pickAgent(sel.value);
+  });
+
+  const agentRow = () => {
+    if (state.agent === 'All agents') return null;
+    const g = dash.data('agents');
+    return g.status === 'ok' ? g.data.find((r) => r.sales_agent === state.agent) : null;
+  };
+
+  dash.draw('mgr-takeaway', (el) => {
+    const g = dash.data('agents'), k = dash.data('kpis');
+    if (g.status !== 'ok' || k.status !== 'ok') { el.textContent = '—'; return; }
+    const kp = k.data[0], avg = n(kp.revenue_per_zip);
+    el.replaceChildren();
+    const add = (t, src, field, where) => { const s = document.createElement(src ? 'b' : 'span'); s.textContent = t; if (src) { s.dataset.source = src; s.dataset.field = field; if (where) s.dataset.where = where; else s.dataset.row = '0'; } el.appendChild(s); };
+    const r = agentRow();
+    if (!r) {
+      const rows = g.data.filter((x) => x.sales_agent !== 'Unassigned (PR)').sort((a, b) => n(b.revenue_per_zip) - n(a.revenue_per_zip));
+      const top = rows[0], low = rows[rows.length - 1];
+      add('Across all agents a ZIP brings '); add(money0(avg), 'kpis', 'revenue_per_zip'); add(' on average. ');
+      add(top.sales_agent + ' leads at '); add(money0(n(top.revenue_per_zip)), 'agents', 'revenue_per_zip', 'sales_agent=' + encodeURIComponent(top.sales_agent));
+      add(' per ZIP and ' + low.sales_agent + ' trails at '); add(money0(n(low.revenue_per_zip)), 'agents', 'revenue_per_zip', 'sales_agent=' + encodeURIComponent(low.sales_agent));
+      add(', with an order value of '); add(money2(n(low.aov)), 'agents', 'aov', 'sales_agent=' + encodeURIComponent(low.sales_agent));
+      add(' against '); add(money2(n(kp.aov)), 'kpis', 'aov'); add(' company-wide. Pick an agent to see their detail.');
+      return;
+    }
+    const w = 'sales_agent=' + encodeURIComponent(r.sales_agent);
+    const diff = n(r.revenue_per_zip) / avg - 1;
+    add((r.sales_agent === 'Unassigned (PR)' ? 'The unassigned PR ZIP' : r.sales_agent) + ' brought '); add(money0(n(r.revenue_per_zip)), 'agents', 'revenue_per_zip', w);
+    add(` per ZIP over ${r.zips} ZIP${r.zips === '1' ? '' : 's'}, ${spct(diff)} against the company average of `); add(money0(avg), 'kpis', 'revenue_per_zip');
+    add('. November came in '); add(spct(n(r.nov_vs_aug_oct)), 'agents', 'nov_vs_aug_oct', w); add(' against the Aug–Oct average.');
+  });
+
+  dash.draw('mgr-tiles', (el) => {
+    const g = dash.data('agents'), k = dash.data('kpis');
+    el.replaceChildren();
+    if (g.status !== 'ok' || k.status !== 'ok') { el.textContent = '—'; return; }
+    const r = agentRow(), kp = k.data[0];
+    const src = r ? 'agents' : 'kpis', w = r ? 'sales_agent=' + encodeURIComponent(r.sales_agent) : null, row = r || kp;
+    const tiles = [
+      ['Net revenue · Jan 3–Dec 6', 'net_revenue', money0(n(row.net_revenue)), r ? `${pct1(n(r.revenue_share))} of company` : `${row.zips} ZIPs`],
+      ['Revenue per ZIP', 'revenue_per_zip', money0(n(row.revenue_per_zip)), r ? `company ${money0(n(kp.revenue_per_zip))}` : 'company average'],
+      ['Orders', 'orders', d3.format(',')(n(row.orders)), r ? `${r.zips} ZIP${r.zips === '1' ? '' : 's'}` : 'about 300 per ZIP'],
+      ['Average order value', 'aov', money2(n(row.aov)), r ? `company ${money2(n(kp.aov))}` : 'net ÷ orders'],
+      ['Discount rate', 'discount_rate', pct1(n(row.discount_rate)), r ? `company ${pct1(n(kp.discount_rate))}` : 'of gross revenue'],
+      ['Nov vs Aug–Oct', 'nov_vs_aug_oct', spct(n(row.nov_vs_aug_oct)), 'monthly average'],
+    ];
+    tiles.forEach(([lab, field, val, sub]) => {
+      const t = document.createElement('div'); t.className = 'tile';
+      const l = document.createElement('span'); l.className = 'lab'; l.textContent = lab;
+      const v = document.createElement('span'); v.className = 'val'; v.textContent = val; v.dataset.source = src; v.dataset.field = field; if (w) v.dataset.where = w; else v.dataset.row = '0';
+      if (field === 'nov_vs_aug_oct') v.classList.add(n(row[field]) >= 0 ? 'good' : 'bad');
+      if (r && field === 'revenue_per_zip') v.classList.add(n(row[field]) >= n(kp.revenue_per_zip) ? 'good' : 'bad');
+      const s = document.createElement('span'); s.className = 'sub'; s.textContent = sub;
+      t.append(l, v, s); el.appendChild(t);
+    });
+  });
+
+  dash.draw('mgr-perzip', (el) => {
+    if (failed(el, 'agents') || failed(el, 'kpis')) return;
+    const avg = n(dash.data('kpis').data[0].revenue_per_zip);
+    const rows = dash.data('agents').data.slice().sort((a, b) => n(b.revenue_per_zip) - n(a.revenue_per_zip));
+    hbar(el, rows.map((r) => ({ label: r.sales_agent, value: n(r.revenue_per_zip), bold: r.sales_agent === state.agent,
+      color: r.sales_agent === 'Unassigned (PR)' ? 'var(--color-warn)' : n(r.revenue_per_zip) < avg * 0.95 ? 'var(--color-bad)' : dash.colors[0],
+      fade: state.agent !== 'All agents' && r.sales_agent !== state.agent,
+      text: `${kfmt(n(r.revenue_per_zip))} · AOV ${money0(n(r.aov))}`,
+      tipLines: [`${r.sales_agent} · ${r.sales_team}`, `${r.zips} ZIPs · ${d3.format(',')(n(r.orders))} orders`, `Per ZIP ${money0(n(r.revenue_per_zip))} (${spct(n(r.revenue_per_zip) / avg - 1)} vs avg)`, `AOV ${money2(n(r.aov))}`] })),
+      { ref: avg, aria: 'Bar chart of revenue per ZIP by agent; Sally highest, Peter lowest' });
+  });
+
+  dash.draw('mgr-agent-rows', (tb) => {
+    const d = dash.data('agents');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    d.data.forEach((r) => {
+      const tr = document.createElement('tr'); if (r.sales_agent === state.agent) tr.className = 'sel';
+      tr.style.cursor = 'pointer'; tr.tabIndex = 0;
+      tr.onclick = () => pickAgent(r.sales_agent);
+      tr.onkeydown = (e) => { if (e.key === 'Enter') pickAgent(r.sales_agent); };
+      const cells = [r.sales_agent, r.sales_team, r.region, r.zips, d3.format(',')(n(r.orders)), money0(n(r.net_revenue)), money0(n(r.revenue_per_zip)), money2(n(r.aov)), n(r.lines_per_order).toFixed(2), pct1(n(r.discount_rate)), r.refund_lines, spct(n(r.nov_vs_aug_oct))];
+      cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c; if (i < 3) td.className = 'l'; if (i === 11) td.className = n(r.nov_vs_aug_oct) < 0 ? 'bad' : 'good'; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+  });
+
+  dash.draw('mgr-trend', (el) => {
+    if (failed(el, 'agent_month')) return;
+    const rows = dash.data('agent_month').data.filter((r) => r.is_partial_month !== '1');
+    const p = d3.utcParse('%Y-%m'), mf = d3.utcFormat('%b %Y');
+    const mk = (a) => rows.filter((r) => r.sales_agent === a).map((r) => ({ x: p(r.month), y: n(r.revenue_per_zip), xLabel: mf(p(r.month)), label: `${money0(n(r.revenue_per_zip))}/ZIP · ${r.orders} orders` }));
+    const series = [{ name: 'All agents', color: 'var(--cds-chart-muted)', faded: true, points: mk('All agents') }];
+    if (state.agent !== 'All agents') series.push({ name: state.agent, color: dash.colors[0], points: mk(state.agent) });
+    else series[0].color = dash.colors[0];
+    line(el, series, { aria: `Line chart of monthly revenue per ZIP for ${state.agent} against all agents` });
+  });
+
+  dash.draw('mgr-week', (el) => {
+    if (failed(el, 'agent_week')) return;
+    const all = dash.data('agent_week').data;
+    const weeks = Array.from(new Set(all.map((r) => r.week_start))).sort().slice(-12);
+    const p = d3.utcParse('%Y-%m-%d'), wf = d3.utcFormat('%-d %b');
+    const pick = (a) => weeks.map((w) => { const r = all.find((x) => x.sales_agent === a && x.week_start === w); return { x: w, y: r ? n(r.revenue_per_zip) : 0, xLabel: 'Week of ' + wf(p(w)), label: r ? `${money0(n(r.revenue_per_zip))}/ZIP · ${r.orders} orders` : 'no orders' }; });
+    const sel = state.agent;
+    const bars = { name: sel, color: dash.colors[0], points: pick(sel) };
+    const series = sel === 'All agents' ? [] : [{ name: 'All agents', color: 'var(--color-fg)', faded: true, dashed: true, points: pick('All agents') }];
+    line(el, series, { band: weeks, bandFormat: (w) => wf(p(w)), bars, zero: true, aria: `Weekly revenue per ZIP for ${sel}, last 12 weeks` });
+  });
+
+  dash.draw('mgr-mix', (el) => {
+    if (failed(el, 'agent_category')) return;
+    const rows = dash.data('agent_category').data.filter((r) => r.sales_agent === state.agent).sort((a, b) => n(b.company_share) - n(a.company_share));
+    hbar(el, rows.map((r) => {
+      const d = n(r.agent_share) - n(r.company_share);
+      return { label: r.category_short, value: n(r.agent_share), tick: n(r.company_share),
+        color: Math.abs(d) >= 0.02 ? (d > 0 ? 'var(--color-ok)' : 'var(--color-bad)') : dash.colors[0],
+        text: state.agent === 'All agents' ? pct1(n(r.agent_share)) : `${pct1(n(r.agent_share))} (${d >= 0 ? '+' : '−'}${(Math.abs(d) * 100).toFixed(1)} pts)`,
+        tipLines: [r.category_short, `${state.agent}: ${pct1(n(r.agent_share))} · ${money0(n(r.net_revenue))}`, `Company: ${pct1(n(r.company_share))}`, `${r.lines} lines`] };
+    }), { ticks: true, tickFormat: d3.format('.0%'), barH: 16, aria: `Category share for ${state.agent} with company share as ticks` });
+  });
+
+  dash.draw('mgr-zip-rows', (tb) => {
+    const d = dash.data('zips');
+    tb.replaceChildren();
+    if (d.status !== 'ok') return;
+    d.data.filter((r) => state.agent === 'All agents' || r.sales_agent === state.agent).forEach((r) => {
+      const tr = document.createElement('tr');
+      const cells = [r.zip5, r.state, r.sales_agent, r.orders, money0(n(r.net_revenue)), money2(n(r.aov)), pct1(n(r.discount_rate)), spct(n(r.h2_vs_h1))];
+      cells.forEach((c, i) => { const td = document.createElement('td'); td.textContent = c; if (i < 3) td.className = 'l'; if (i === 7) td.className = n(r.h2_vs_h1) < 0 ? 'bad' : 'good'; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+  });
+})();
+</script>

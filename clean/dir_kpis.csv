@@ -1,0 +1,2 @@
+net_revenue,gross_revenue,discounts,discount_rate,orders,aov,zips,revenue_per_zip,first_date,last_date,avg_full_month_revenue,h1_avg_month,h2_avg_month,h2_vs_h1,nov_revenue,aug_oct_avg,nov_vs_aug_oct,unassigned_revenue,unassigned_share
+1457538.49,1472833.69,-15295.2,0.0104,5991,243.29,20,72876.92,2023-01-03,2023-12-06,130457.29,129009.36,132194.81,0.0247,132139.44,130655.84,0.0114,76608.13,0.0526

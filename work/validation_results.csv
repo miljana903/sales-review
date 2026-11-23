@@ -1,0 +1,35 @@
+chk,expected,got,pass
+Row reconciliation: raw order lines - removed (0) = clean lines,13496.0,13496.0,True
+Row count unchanged by joins (clean_orders = fact_order_lines),13496.0,13496.0,True
+Distinct orders raw = clean,5991.0,5991.0,True
+Total reconciliation: raw revenue x100 = clean revenue x100 (cents),145753849.0,145753849.0,True
+"Grain: clean lines = distinct (order_id, category)",13496.0,13496.0,True
+Grain: one date and one ZIP per order (orders with >1),0.0,0.0,True
+Reference unique: regions rows = distinct zipcode,20.0,20.0,True
+Reference unique: agents rows = distinct agent_id,7.0,7.0,True
+Joins: order lines with ZIP not in Regions (Not found),0.0,0.0,True
+Joins: Regions.agent_id not in Sales_agents (excluding logged NULL),0.0,0.0,True
+Joins: lines labelled Unassigned (PR) = raw lines for ZIP 965 (logged C5),647.0,647.0,True
+Consistency: agent region = ZIP region for every assigned ZIP (mismatches),0.0,0.0,True
+Nulls: blank revenue / date / category / ZIP in clean_orders,0.0,0.0,True
+Nulls: NULL agent_id in fact = lines of ZIP 965 only,647.0,647.0,True
+Types: numeric revenue count = non-blank count,13496.0,13496.0,True
+Types: valid ISO dates (date() round-trips),13496.0,13496.0,True
+Domains: sales_team values not of form Team N,0.0,0.0,True
+Domains: distinct sales teams after case fix,5.0,5.0,True
+Domains: values with leading/trailing spaces (agents+regions),0.0,0.0,True
+Domains: dates outside 2023-01-01..2023-12-31,0.0,0.0,True
+Flags: is_negative = negative lines outside discount category,121.0,121.0,True
+Flags: is_zero = raw zero lines,2367.0,2367.0,True
+Flags: is_partial_month = raw lines dated December 2023,217.0,217.0,True
+Group totals: sum of agent revenue x100 = grand total x100,145753849.0,145753849.0,True
+Group totals: sum of region revenue x100 = grand total x100,145753849.0,145753849.0,True
+Group totals: sum of monthly revenue x100 = grand total x100,145753849.0,145753849.0,True
+Group totals: sum of category revenue x100 = grand total x100,145753849.0,145753849.0,True
+Group totals: sum of agent orders = total orders,5991.0,5991.0,True
+Two methods: net revenue (SQL dir_kpis vs pandas sum of raw),1457538.49,1457538.49,True
+Two methods: orders (SQL vs pandas nunique),5991.0,5991.0,True
+Two methods: gross revenue (SQL vs pandas filter),1472833.69,1472833.69,True
+"Two methods: per-agent revenue & orders, SQL groupby vs pandas merge+groupby (agents differing)",0.0,0.0,True
+Two methods: monthly revenue SQL vs pandas (months differing),0.0,0.0,True
+Date range: Nov revenue by >= 2023-11-01 and < 2023-12-01 vs SQL month='2023-11',132139.44,132139.44,True

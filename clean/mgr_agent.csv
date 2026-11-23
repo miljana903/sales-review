@@ -1,0 +1,9 @@
+sales_team,sales_agent,region,macro_region,zips,orders,net_revenue,revenue_share,revenue_per_zip,aov,lines_per_order,discount_rate,share_orders_zero_or_negative,refund_lines,refund_value,outlier_lines,zero_lines,nov_revenue,aug_oct_avg,nov_vs_aug_oct
+Team 2,Sally,North Midwest (Midwest),Midwest,1,300,79691.01,0.0547,79691.01,265.64,2.39,0.0107,0.0867,2,-136.06,17,124,7938.49,6695.22,0.1857
+Team 1,Sam,Mid-Atlantic (South),South,2,599,153599.62,0.1054,76799.81,256.43,2.29,0.0097,0.0751,13,-1075.84,32,236,12809.49,13074.52,-0.0203
+Unassigned (PR),Unassigned (PR),Unassigned (PR),Unassigned (PR),1,299,76608.13,0.0526,76608.13,256.21,2.16,0.0088,0.087,3,-64.09,14,106,8396.95,6331.62,0.3262
+Team 2,Jan,Midwest,Midwest,6,1797,444702.42,0.3051,74117.07,247.47,2.32,0.0125,0.0757,36,-3338.48,75,763,36801.07,41846.13,-0.1206
+Team 4,Sarah,South,South,4,1197,295816.26,0.203,73954.07,247.13,2.23,0.0091,0.0752,14,-926.92,46,488,29123.41,26642.26,0.0931
+Team 3,Luke,Northeast,Northeast,2,600,146765.17,0.1007,73382.59,244.61,2.23,0.0069,0.0833,16,-1661.6,23,240,11751.75,12201.8,-0.0369
+Team 5,Gordon,West,West,2,599,132561.66,0.0909,66280.83,221.3,2.14,0.0133,0.0985,22,-3082.94,21,210,12370.39,12100.85,0.0223
+Team 1,Peter,Mid-South (South),South,2,600,127794.22,0.0877,63897.11,212.99,2.17,0.0086,0.0917,15,-2650.8,18,200,12947.89,11763.45,0.1007

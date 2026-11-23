@@ -1,0 +1,9 @@
+order_id,order_category,reporting_date,revenue,zip5,region,macro_region,sales_agent,sales_team,is_negative,is_zero,is_outlier,is_partial_month
+197716-2603,Grooming Revenue,2023-12-06,74.0,50667,Midwest,Midwest,Jan,Team 2,0,0,0,1
+197479-2603,Professional Services Revenue,2023-11-20,0.0,00965,Unassigned (PR),Unassigned (PR),Unassigned (PR),Unassigned (PR),0,1,0,0
+197479-2603,Anesthesia Revenue,2023-11-20,292.0,00965,Unassigned (PR),Unassigned (PR),Unassigned (PR),Unassigned (PR),0,0,0,0
+197479-2603,Pharmacy Revenue,2023-11-20,101.8,00965,Unassigned (PR),Unassigned (PR),Unassigned (PR),Unassigned (PR),0,0,0,0
+197479-2603,Imaging Revenue,2023-11-20,57.0,00965,Unassigned (PR),Unassigned (PR),Unassigned (PR),Unassigned (PR),0,0,0,0
+196077-2603,Boarding Revenue,2023-09-04,2184.0,77964,South,South,Sarah,Team 4,0,0,1,0
+197479-2603,Surgery Revenue,2023-11-20,50.0,00965,Unassigned (PR),Unassigned (PR),Unassigned (PR),Unassigned (PR),0,0,0,0
+195166-2603,Surgery Revenue,2023-07-12,-894.0,41015,Mid-South (South),South,Peter,Team 1,1,0,1,0
